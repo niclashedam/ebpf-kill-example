@@ -37,6 +37,10 @@ To start ebpf-kill-example, go to the root of the repository and run.
 sudo LD_LIBRARY_PATH=lib64/:$LD_LIBRARY_PATH ./src/ebpf-kill-example
 ```
 
+## Example
+![eBPF Program](/img/example-ebpf.png?raw=true "eBPF Program")
+![Malicious user](/img/example-user.png?raw=true "Malicious user")
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
