@@ -36,7 +36,7 @@ build: kernel-src ${BPFCODE.c} ${BPFLOADER}
 
 bpfload: build
 	$(CLANG) -o $(EXECABLE) -lelf $(LOADINCLUDE) $(LIBRARY_PATH) $(BPFSO) \
-        $(BPFLOADER) -DHAVE_ATTR_TEST=0 src/trace_helpers.c src/loader.c
+        $(BPFLOADER) -DHAVE_ATTR_TEST=0 src/loader.c
 
 $(EXECABLE): bpfload
 
