@@ -14,7 +14,6 @@ CCINCLUDE += -Ikernel-src/tools/lib/bpf
 LOADINCLUDE += -Ikernel-src/samples/bpf
 LOADINCLUDE += -Ikernel-src/tools/lib
 LOADINCLUDE += -Ikernel-src/tools/perf
-LOADINCLUDE += -Ikernel-src/tools/include
 LIBRARY_PATH = -Llib64
 BPFSO = -lbpf
 
@@ -22,7 +21,7 @@ BPFSO = -lbpf
 
 deps:
 	sudo apt update
-	sudo apt install -y build-essential git make libelf-dev clang strace tar bpfcc-tools linux-headers-$(uname -r) gcc-multilib
+	sudo apt install -y build-essential git make gcc clang libelf-dev gcc-multilib
 
 kernel-src:
 	git clone --depth 1 --single-branch --branch ${LINUX_VERSION}  https://github.com/torvalds/linux.git kernel-src
