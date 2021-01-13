@@ -31,5 +31,5 @@ jobs:
       - name: Compile ebpf-kill-example
         run: make
       
-      - name: Load eBPF program
-        run: sudo LD_LIBRARY_PATH=lib64/:$LD_LIBRARY_PATH ./src/ebpf-kill-example
+      - name: Test eBPF program
+        run: ./test/test.sh
