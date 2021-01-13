@@ -32,10 +32,10 @@ clean:
 	rm -f src/*.o src/*.so $(EXECABLE)
 
 build: kernel-src ${BPFCODE.c} ${BPFLOADER}
-	$(CLANG) -target bpf -c $(BPFCODE:=.c) $(CCINCLUDE) -o ${BPFCODE:=.o}
+	$(CLANG) -O2 -target bpf -c $(BPFCODE:=.c) $(CCINCLUDE) -o ${BPFCODE:=.o}
 
 bpfload: build
-	$(CLANG) -o $(EXECABLE) -lelf $(LOADINCLUDE) $(LIBRARY_PATH) $(BPFSO) \
+	$(CLANG) -O2 -o $(EXECABLE) -lelf $(LOADINCLUDE) $(LIBRARY_PATH) $(BPFSO) \
         $(BPFLOADER) -DHAVE_ATTR_TEST=0 src/loader.c
 
 $(EXECABLE): bpfload
