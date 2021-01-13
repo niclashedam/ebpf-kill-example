@@ -14,6 +14,7 @@ CCINCLUDE += -Ikernel-src/tools/lib/bpf
 LOADINCLUDE += -Ikernel-src/samples/bpf
 LOADINCLUDE += -Ikernel-src/tools/lib
 LOADINCLUDE += -Ikernel-src/tools/perf
+LOADINCLUDE += -Ikernel-src/tools/include
 LIBRARY_PATH = -Llib64
 BPFSO = -lbpf
 
