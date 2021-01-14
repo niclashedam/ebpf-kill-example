@@ -1,6 +1,6 @@
 CLANG = clang
 
-LINUX_VERSION = v5.8
+LINUX_VERSION = v5.4
 
 EXECABLE = src/ebpf-kill-example
 BPFCODE = src/bpf_program
