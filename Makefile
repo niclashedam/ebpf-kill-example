@@ -11,7 +11,7 @@ build:
 clean:
 	$(MAKE) --directory=src clean
 
-load: build
+load:
 	sudo LD_LIBRARY_PATH=./libbpf/src:$LD_LIBRARY_PATH src/ebpf-kill-example
 
-.DEFAULT_GOAL := load
+.DEFAULT_GOAL := build
