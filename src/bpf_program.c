@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "bpf_helpers.h"
 
+#define SIGKILL 9
+
 // Data in this map is accessible in user-space
 struct bpf_map_def SEC("maps") kill_map = {
       .type        = BPF_MAP_TYPE_HASH,
@@ -22,8 +24,11 @@ struct syscalls_enter_kill_args {
 
 SEC("tracepoint/syscalls/sys_enter_kill")
 int bpf_prog(struct syscalls_enter_kill_args *ctx) {
-  // Ignore normal program terminations
-  if(ctx->sig != 9) return 0;
+  // For this tiny example, we will only listen for "kill -9".
+  // Bear in mind that there exist many other signals, and it
+  // may be possible to stop or forcefully terminate processes
+  // with other signals.
+  if(ctx->sig != SIGKILL) return 0;
 
   // We can call glibc functions in eBPF program if and only if
   // they are not too large and do not use any of the risky operations
