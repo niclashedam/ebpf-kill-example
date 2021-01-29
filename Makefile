@@ -1,43 +1,17 @@
-CLANG = clang
-
-LINUX_VERSION = v5.4
-
-EXECABLE = src/ebpf-kill-example
-BPFCODE = src/bpf_program
-
-BPFTOOLS = kernel-src/samples/bpf
-BPFLOADER = $(BPFTOOLS)/bpf_load.c
-
-CCINCLUDE += -Ikernel-src/tools/testing/selftests/bpf
-CCINCLUDE += -Ikernel-src/tools/lib/bpf
-
-LOADINCLUDE += -Ikernel-src/samples/bpf
-LOADINCLUDE += -Ikernel-src/tools/lib
-LOADINCLUDE += -Ikernel-src/tools/perf
-LOADINCLUDE += -Ikernel-src/tools/include
-LIBRARY_PATH = -Llib64
-BPFSO = -lbpf
-
-.PHONY: clean bpfload build deps
+.PHONY: clean build deps
 
 deps:
 	sudo apt update
-	sudo apt install -y build-essential git make gcc clang libelf-dev gcc-multilib
+	sudo apt install -y build-essential git make gcc clang llvm libelf-dev
+	git submodule update --init
 
-kernel-src:
-	git clone --depth 1 --single-branch --branch ${LINUX_VERSION}  https://github.com/torvalds/linux.git kernel-src
-	cd kernel-src/tools/lib/bpf && make && make install prefix=../../../../
+build:
+	$(MAKE) --directory=src
 
 clean:
-	rm -f src/*.o src/*.so $(EXECABLE)
+	$(MAKE) --directory=src clean
 
-build: kernel-src ${BPFCODE.c} ${BPFLOADER}
-	$(CLANG) -O2 -target bpf -c $(BPFCODE:=.c) $(CCINCLUDE) -o ${BPFCODE:=.o}
+load: build
+	sudo LD_LIBRARY_PATH=./libbpf/src:$LD_LIBRARY_PATH src/ebpf-kill-example
 
-bpfload: build
-	$(CLANG) -O2 -o $(EXECABLE) -lelf $(LOADINCLUDE) $(LIBRARY_PATH) $(BPFSO) \
-        $(BPFLOADER) -DHAVE_ATTR_TEST=0 src/loader.c
-
-$(EXECABLE): bpfload
-
-.DEFAULT_GOAL := $(EXECABLE)
+.DEFAULT_GOAL := load

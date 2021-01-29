@@ -25,9 +25,6 @@ jobs:
       - name: Install dependencies
         run: make deps
       
-      - name: Fetch kernel
-        run: make kernel-src
-
       - name: Compile ebpf-kill-example
         run: make
       

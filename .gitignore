@@ -1,3 +1,7 @@
+*.save
+
+.ll
+
 # Prerequisites
 *.d
 

@@ -36,7 +36,7 @@ make
 To start *ebpf-kill-example*, go to the root of the repository and run.
 
 ```
-sudo LD_LIBRARY_PATH=lib64/:$LD_LIBRARY_PATH ./src/ebpf-kill-example
+sudo LD_LIBRARY_PATH=libbpf/src/:$LD_LIBRARY_PATH ./src/ebpf-kill-example
 ```
 
 ## Test
