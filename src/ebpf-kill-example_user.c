@@ -8,8 +8,9 @@ int main(int argc, char **argv)
    	// Load our newly compiled eBPF program
     int prog_fd;
 
-    struct bpf_object * obj;
-    if (bpf_prog_load("src/ebpf-kill-example_kern.o", BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
+    struct bpf_object *obj;
+
+    if (bpf_prog_load("ebpf-kill-example_kern.o", BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
     {
         printf("The kernel didn't load the BPF program\n");
         return -1;
@@ -20,6 +21,9 @@ int main(int argc, char **argv)
         printf("Error creating prog_fd\n");
         return -2;
     }
+
+    struct bpf_program *prog = bpf_object__find_program_by_name(obj, "ebpf_kill_example");
+    bpf_program__attach(prog);
 
     printf("eBPF will listen to force kills for the next 30 seconds!\n");
     sleep(30);

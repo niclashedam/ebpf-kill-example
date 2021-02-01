@@ -23,7 +23,7 @@ struct syscalls_enter_kill_args {
 };
 
 SEC("tracepoint/syscalls/sys_enter_kill")
-int bpf_prog(struct syscalls_enter_kill_args *ctx) {
+int ebpf_kill_example(struct syscalls_enter_kill_args *ctx) {
   // For this tiny example, we will only listen for "kill -9".
   // Bear in mind that there exist many other signals, and it
   // may be possible to stop or forcefully terminate processes
