@@ -5,12 +5,15 @@
 #define SIGKILL 9
 
 // Data in this map is accessible in user-space
-struct bpf_map_def SEC("maps") kill_map = {
-      .type        = BPF_MAP_TYPE_HASH,
-      .key_size    = sizeof(long),
-      .value_size  = sizeof(char),
-      .max_entries = 64,
-};
+// The particular syntax with __uint() and __type() and the use of the .maps
+// section enable BTF for this map. For an example, "bpftool map dump" will
+// show the map structure.
+struct {
+  __uint(type, BPF_MAP_TYPE_HASH);
+  __type(key, long);
+  __type(value, char);
+  __uint(max_entries, 64);
+} kill_map SEC(".maps");
 
 // This is the tracepoint arguments of the kill functions
 // /sys/kernel/debug/tracing/events/syscalls/sys_enter_kill/format
