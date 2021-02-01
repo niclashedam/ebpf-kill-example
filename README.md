@@ -18,13 +18,6 @@ Install dependencies needed to compile *ebpf-kill-example*.
 make deps
 ```
 
-Download an instance of the kernel and compile necessary modules. This will take 5-10 minutes depending on your connection.
-By default, the Makefile is configured to download a LTS version of the kernel.
-
-```
-make kernel-src
-```
-
 Compile *ebpf-kill-example*.
 
 ```
@@ -33,20 +26,21 @@ make
 
 ## Usage
 
-To start *ebpf-kill-example*, go to the root of the repository and run.
+To start *ebpf-kill-example*, run the following command.
 
 ```
-sudo LD_LIBRARY_PATH=libbpf/src/:$LD_LIBRARY_PATH ./src/ebpf-kill-example
+make load
 ```
 
 ## Test
 
-To test *ebpf-kill-example*, run `./test/test.sh`.
+To test *ebpf-kill-example*, run `make test`.
 This will load the eBPF program, start a looping process and kill it. It will
 verify that the eBPF program was invoked when kill was called.
 
 ```
-nhed@nhed-1:~/Development/ebpf-kill-example$ ./test/test.sh
+nhed@nhed-1:~/Development/ebpf-kill-example$ make test
+./test/test.sh
 -- Loading eBPF program.
 -- Starting test process to kill.
 -- PID of test process is 332996.
