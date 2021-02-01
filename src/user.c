@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
     struct bpf_object *obj;
 
-    if (bpf_prog_load("ebpf-kill-example_kern.o", BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
+    if (bpf_prog_load("kern.o", BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
     {
         printf("The kernel didn't load the BPF program\n");
         return -1;

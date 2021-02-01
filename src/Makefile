@@ -9,9 +9,9 @@ CC ?= gcc
 
 LIBBPF_DIR = ../libbpf/src/
 
-BPF_C = ${TARGET:=_kern.c}
+BPF_C = kern.c
 BPF_OBJ = ${BPF_C:.c=.o}
-USER_C = ${TARGET:=_user.c}
+USER_C = user.c
 USER_OBJ = ${USER_C:.c=.o}
 OBJECT_LIBBPF = $(LIBBPF_DIR)/libbpf.a
 
