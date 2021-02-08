@@ -26,10 +26,10 @@ make
 
 ## Usage
 
-To start *ebpf-kill-example*, run the following command.
+Run *ebpf-kill-example*. Super user privileges are required to load the program into the kernel.
 
 ```
-make load
+sudo ./src/ebpf-kill-example
 ```
 
 ## Test
@@ -49,8 +49,7 @@ nhed@nhed-1:~/Development/ebpf-kill-example$ make test
 ```
 
 ## Example
-![Malicious user](/img/example-user.png?raw=true "Malicious user")
-![eBPF Program](/img/example-ebpf.png?raw=true "eBPF Program")
+![Example](/img/example.png?raw=true)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

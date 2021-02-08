@@ -14,7 +14,7 @@ set -e
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
 echo "-- Loading eBPF program."
-sudo make load > /tmp/ebpf-kill.log &
+sudo ./src/ebpf-kill-example > /tmp/ebpf-kill.log &
 
 sleep 5
 

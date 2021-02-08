@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include <linux/bpf.h>
+#include <stdlib.h>
+
 #include <bpf/bpf_helpers.h>
 
 #define SIGKILL 9
@@ -18,11 +19,11 @@ struct {
 // This is the tracepoint arguments of the kill functions
 // /sys/kernel/debug/tracing/events/syscalls/sys_enter_kill/format
 struct syscalls_enter_kill_args {
-    long long pad;
+  long long pad;
 
-    long syscall_nr;
-    long pid;
-    long sig;
+  long syscall_nr;
+  long pid;
+  long sig;
 };
 
 SEC("tracepoint/syscalls/sys_enter_kill")
@@ -31,7 +32,8 @@ int ebpf_kill_example(struct syscalls_enter_kill_args *ctx) {
   // Bear in mind that there exist many other signals, and it
   // may be possible to stop or forcefully terminate processes
   // with other signals.
-  if(ctx->sig != SIGKILL) return 0;
+  if (ctx->sig != SIGKILL)
+    return 0;
 
   // We can call glibc functions in eBPF program if and only if
   // they are not too large and do not use any of the risky operations
