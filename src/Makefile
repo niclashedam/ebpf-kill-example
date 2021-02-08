@@ -14,6 +14,7 @@ all: $(TARGET) kern.o
 clean:
 	rm -f $(TARGET)
 	rm -f kern.o
+	rm -f kern.ll
 
 $(TARGET): %: user.c Makefile
 	gcc $(CFLAGS) $(LDFLAGS) -o $(TARGET) user.c -Wl,-rpath=$(LIBBPF_DIR) $(LIBS)

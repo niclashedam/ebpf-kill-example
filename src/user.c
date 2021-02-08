@@ -1,16 +1,20 @@
 #include <unistd.h>
+#include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <bpf/bpf.h>
 #include <bpf/libbpf.h>
+#include <libgen.h>
 
 int main(int argc, char **argv)
 {
-   	// Load our newly compiled eBPF program
-    int prog_fd;
+    char path[PATH_MAX];
+    sprintf(path, "%s/kern.o", dirname(argv[0]));
 
+    int prog_fd;
     struct bpf_object *obj;
 
-    if (bpf_prog_load("kern.o", BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
+    if (bpf_prog_load(path, BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd) != 0)
     {
         printf("The kernel didn't load the BPF program\n");
         return -1;
