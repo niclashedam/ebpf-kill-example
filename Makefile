@@ -1,18 +1,20 @@
-.PHONY: clean build deps test
+.PHONY: clean build deps test libbpf
 
 deps:
 	sudo apt update
 	sudo apt install -y build-essential git make gcc clang llvm libelf-dev
 	git submodule update --init
 
-build:
+libbpf:
+	$(MAKE) --directory=libbpf/src all
+	DESTDIR=root $(MAKE) --directory=libbpf/src install_headers
+
+build: libbpf
 	$(MAKE) --directory=src
 
 clean:
 	$(MAKE) --directory=src clean
-
-load:
-	cd src; sudo LD_LIBRARY_PATH=../libbpf/src:$LD_LIBRARY_PATH ./ebpf-kill-example
+	$(MAKE) --directory=libbpf/src clean
 
 test:
 	./test/test.sh
