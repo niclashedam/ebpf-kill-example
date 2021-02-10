@@ -2,7 +2,7 @@
 
 deps:
 	sudo apt update
-	sudo apt install -y build-essential git make gcc clang llvm libelf-dev
+	sudo apt install -y build-essential git make gcc clang llvm libelf-dev gcc-multilib
 	git submodule update --init
 
 libbpf:
