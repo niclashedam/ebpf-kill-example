@@ -21,6 +21,7 @@ $(TARGET): %: user.c Makefile
 
 kern.o: kern.c
 	clang -S \
+	    -target bpf \
 	    -D __BPF_TRACING__ \
 	    $(CFLAGS) \
 	    -Wall \
