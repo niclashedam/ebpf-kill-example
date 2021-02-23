@@ -4,6 +4,15 @@
 This project is a Proof-of-Concept (PoC) showing the feasibility and viability of eBPF.
 Furthermore, the project shows how to create and run a simple eBPF program.
 
+## Minimum requirements
+
+To run this example, the following software is required.
+
+- **Linux kernel v4.19+**
+- **LLVM 10+**
+- libelf-dev (Installed via *make deps*)
+- gcc-multilib (Installed via *make deps*)
+
 ## Installation
 
 To install ebpf-kill-example, first clone this repository.
