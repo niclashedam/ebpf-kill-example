@@ -1,6 +1,7 @@
 /*
- * This file is part of the ebpf-kill-example distribution (https://github.com/niclashedam/ebpf-kill-example).
- * Copyright (c) 2021 Niclas Hedam.
+ * This file is part of the ebpf-kill-example distribution
+ * (https://github.com/niclashedam/ebpf-kill-example). Copyright (c) 2021 Niclas
+ * Hedam.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
