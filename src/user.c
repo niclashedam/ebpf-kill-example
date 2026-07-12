@@ -26,7 +26,7 @@
 
 int main(int argc, char **argv) {
   char path[PATH_MAX];
-  sprintf(path, "%s/kern.o", dirname(argv[0]));
+  snprintf(path, sizeof(path), "%s/kern.o", dirname(argv[0]));
 
   struct bpf_object *obj;
   struct bpf_link *link = NULL;
