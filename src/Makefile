@@ -7,6 +7,12 @@ LDFLAGS ?= -L$(LIBBPF_DIR)
 
 LIBS = -lbpf -lelf
 
+# clang's `bpf` target does not search the host's multiarch include directory,
+# so kernel/libc headers such as <asm/types.h> are not found. Point it there
+# explicitly. Using $(uname -m) keeps this portable across architectures
+# (e.g. x86_64-linux-gnu, aarch64-linux-gnu).
+ARCH_INCLUDES = -I/usr/include/$(shell uname -m)-linux-gnu
+
 all: $(TARGET) kern.o
 
 .PHONY: clean
@@ -24,6 +30,7 @@ kern.o: kern.c
 	    -target bpf \
 	    -D __BPF_TRACING__ \
 	    $(CFLAGS) \
+	    $(ARCH_INCLUDES) \
 	    -Wall \
 	    -Werror \
 	    -O2 -emit-llvm -c -g kern.c

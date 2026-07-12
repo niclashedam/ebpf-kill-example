@@ -14,7 +14,10 @@ set -e
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
 echo "-- Loading eBPF program."
-sudo ./src/ebpf-kill-example > /tmp/ebpf-kill.log &
+# Already running as root (line 14 re-execs via sudo when needed), so invoke
+# the loader directly. This keeps the test working in environments without
+# sudo installed, such as containers.
+./src/ebpf-kill-example > /tmp/ebpf-kill.log &
 
 sleep 5
 
