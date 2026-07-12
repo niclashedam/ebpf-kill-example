@@ -1,8 +1,24 @@
 # ebpf-kill-example
 
+[![CI](https://github.com/niclashedam/ebpf-kill-example/actions/workflows/default.yml/badge.svg)](https://github.com/niclashedam/ebpf-kill-example/actions/workflows/default.yml)
+
 *ebpf-kill-example* is an example of an eBPF program hooking into the kill tracepoint.
 This project is a Proof-of-Concept (PoC) showing the feasibility and viability of eBPF.
 Furthermore, the project shows how to create and run a simple eBPF program.
+
+## How it works
+
+The eBPF program in [`src/kern.c`](src/kern.c) attaches to the `sys_enter_kill`
+tracepoint, so it runs inside the kernel every time a process calls `kill()`.
+When the signal is `SIGKILL` (a `kill -9`), it records the target PID in a BPF
+hash map. All other signals are ignored.
+
+The loader in [`src/user.c`](src/user.c) loads that program into the kernel,
+attaches it, and waits 30 seconds. It then reads the hash map, which is shared
+between kernel and user space, and prints every PID that was force-killed during
+that window.
+
+For background on eBPF itself, see [What is eBPF?](docs/what-is-ebpf.md).
 
 ## Minimum requirements
 
@@ -15,9 +31,9 @@ To run this example, the following software is required.
 - gcc-multilib (Installed via *make deps*)
 
 Alternatively, you can build and run everything with [Docker](#docker), which
-needs only Docker installed — no local toolchain. This is the easiest way to
-try the example on non-Linux hosts (e.g. macOS) or on architectures where
-*gcc-multilib* is unavailable, such as arm64.
+needs nothing installed beyond Docker itself. This is the easiest way to try
+the example on non-Linux hosts (e.g. macOS), or on architectures where
+*gcc-multilib* is not available, such as arm64.
 
 ## Installation
 
@@ -54,11 +70,11 @@ This will load the eBPF program, start a looping process and kill it. It will
 verify that the eBPF program was invoked when kill was called.
 
 ```
-nhed@nhed-1:~/Development/ebpf-kill-example$ make test
+$ make test
 ./test/test.sh
 -- Loading eBPF program.
 -- Starting test process to kill.
--- PID of test process is 332996.
+-- PID of test process is 4242.
 -- Killed. Waiting for eBPF program to terminate ..
 [ OK ] -- eBPF program ran as expected.
 ```
