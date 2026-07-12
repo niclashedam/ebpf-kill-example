@@ -11,7 +11,13 @@ To run this example, the following software is required.
 - **Linux kernel v4.19+**
 - **LLVM 10+**
 - libelf-dev (Installed via *make deps*)
+- zlib1g-dev (Installed via *make deps*)
 - gcc-multilib (Installed via *make deps*)
+
+Alternatively, you can build and run everything with [Docker](#docker), which
+needs only Docker installed — no local toolchain. This is the easiest way to
+try the example on non-Linux hosts (e.g. macOS) or on architectures where
+*gcc-multilib* is unavailable, such as arm64.
 
 ## Installation
 
@@ -56,6 +62,29 @@ nhed@nhed-1:~/Development/ebpf-kill-example$ make test
 -- Killed. Waiting for eBPF program to terminate ..
 [ OK ] -- eBPF program ran as expected.
 ```
+
+## Docker
+
+A `Dockerfile` is provided for a reproducible build and test environment that
+does not depend on your host setup. This is handy on non-Linux hosts or when
+you would rather not install the toolchain locally.
+
+Build the image:
+
+```
+docker build -t ebpf-kill-example .
+```
+
+Build and run the test. The eBPF program is loaded into the kernel and attached
+to a tracepoint, so `--privileged` is required (the container mounts tracefs so
+the tracepoint is reachable):
+
+```
+docker run --rm --privileged ebpf-kill-example
+```
+
+On Docker Desktop (macOS/Windows) the container runs against the Docker VM's
+Linux kernel, so a Linux host is not required.
 
 ## Example
 ![Example](/img/example.png?raw=true)
